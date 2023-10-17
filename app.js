@@ -1,23 +1,15 @@
-var json = [];
-
-async function pobierz() {
-  const data = await fetch('http://192.168.56.1/wordpress_bs/wp-json/wp/v2/posts');
-  json = await data.json();
-  //console.log(json);
-}
-pobierz();
-
 var jsonk = []
-async function komentarze(){
-  const data = await fetch(`http://192.168.56.1/wordpress_bs/wp-json/wp/v2/comments`);
-  jsonk = await data.json();
-  //console.log(jsonk)
 
-  if (jsonk.length > 0) {
-    for (let i in jsonk) {
+async function komentarze(){
+  const data = await fetch(`http://192.168.8.191/wordpress/wp-json/wp/v2/comments`);
+  jsonk = await data.json();
+  console.log(jsonk)
+
+  if(jsonk.length > 0) {
+    for (let j in jsonk) {
         const miejsce = document.getElementById("ogol")
         const divkom = document.createElement("div")
-        divkom.setAttribute("id", `divik${i}`)
+        divkom.classList.add("divik")
 
         const goragora = document.createElement("div")
         goragora.setAttribute("id", "goragora")
@@ -30,18 +22,18 @@ async function komentarze(){
 
         const button = document.createElement("button")
         button.addEventListener('click', ()=>{
-          zrob(jsonk[i].id)
+          zrob(jsonk[j].id)
         })
 
-        
-        gora.innerHTML=jsonk[i].content.rendered
+        const idkom = jsonk[j].post
+        const url = await fetch(`http://192.168.8.191/wordpress/wp-json/wp/v2/posts/${idkom}`)
+        const dane = await url.json()
 
-        // Znajdź tytuł postu powiązanego z komentarzem
-      const powiazanyPost = json.find(post => post.id === jsonk[i].post);
-      if (powiazanyPost) {
-        goragora.innerHTML = powiazanyPost.title.rendered;
-      }
-    
+        if(dane.title){
+          goragora.innerHTML=dane.title.rendered
+        }
+          
+        gora.innerHTML=jsonk[j].content.rendered
         dol.appendChild(button)
         divkom.appendChild(goragora)
         divkom.appendChild(gora)
@@ -49,10 +41,9 @@ async function komentarze(){
         miejsce.appendChild(divkom)
 
 
-      if(jsonk[i].content.rendered.includes("Kupa"||"kupa")){
-        const divos = document.getElementById(`divik${i}`)
-        divos.style.backgroundColor="red"
-      }
+        if(jsonk[j].content.rendered.toLowerCase().includes("kupa")){
+          divkom.style.backgroundColor="red"
+        }
     }
   } 
 } 
@@ -60,7 +51,7 @@ komentarze()
 
 function zrob(id){
  //tworzymy polecenie
- const url = new URL(`http://192.168.56.1/wordpress_bs/wp-json/wp/v2/comments/${id}`)
+ const url = new URL(`http://192.168.8.191/wordpress/wp-json/wp/v2/comments/${id}`)
  
    fetch(url,{
      method: 'DELETE',
