@@ -27,10 +27,10 @@ async function komentarze(){
 
         const idkom = jsonk[j].post
         const url = await fetch(`http://192.168.8.191/wordpress/wp-json/wp/v2/posts/${idkom}`)
-        const dane = await url.json()
+        const json = await url.json()
 
-        if(dane.title){
-          goragora.innerHTML=dane.title.rendered
+        if(json.title){
+          goragora.innerHTML=json.title.rendered
         }
           
         gora.innerHTML=jsonk[j].content.rendered
