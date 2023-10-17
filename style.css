@@ -61,19 +61,29 @@ body{
     width: 450px;
 }
 
+
+#goragora{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 20%;
+    width: 100%;
+}
+
 #gora{
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 90%;
+    height: 60%;
     width: 100%;
 }
+
 
 #dol{
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 90%;
+    height: 20%;
     width: 100%;
 }
 button{

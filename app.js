@@ -7,15 +7,20 @@ async function pobierz() {
 }
 pobierz();
 
+var jsonk = []
 async function komentarze(){
   const data = await fetch(`http://192.168.56.1/wordpress_bs/wp-json/wp/v2/comments`);
-  const json = await data.json();
+  jsonk = await data.json();
+  //console.log(jsonk)
 
-  if (json.length > 0) {
-    for (let i in json) {
+  if (jsonk.length > 0) {
+    for (let i in jsonk) {
         const miejsce = document.getElementById("ogol")
         const divkom = document.createElement("div")
         divkom.setAttribute("id", `divik${i}`)
+
+        const goragora = document.createElement("div")
+        goragora.setAttribute("id", "goragora")
 
         const gora = document.createElement("div")
         gora.setAttribute("id", "gora")
@@ -25,26 +30,33 @@ async function komentarze(){
 
         const button = document.createElement("button")
         button.addEventListener('click', ()=>{
-          zrob(json[i].id)
+          zrob(jsonk[i].id)
         })
 
+        
+        gora.innerHTML=jsonk[i].content.rendered
 
-        gora.innerHTML=json[i].content.rendered
+        // Znajdź tytuł postu powiązanego z komentarzem
+      const powiazanyPost = json.find(post => post.id === jsonk[i].post);
+      if (powiazanyPost) {
+        goragora.innerHTML = powiazanyPost.title.rendered;
+      }
+    
         dol.appendChild(button)
+        divkom.appendChild(goragora)
         divkom.appendChild(gora)
         divkom.appendChild(dol)
         miejsce.appendChild(divkom)
 
 
-      if(json[i].content.rendered.includes("Kupa"||"kupa")){
+      if(jsonk[i].content.rendered.includes("Kupa"||"kupa")){
         const divos = document.getElementById(`divik${i}`)
         divos.style.backgroundColor="red"
       }
     }
   } 
-}komentarze()
-
-
+} 
+komentarze()
 
 function zrob(id){
  //tworzymy polecenie
