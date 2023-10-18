@@ -1,12 +1,12 @@
 var jsonk = []
 
 async function komentarze(){
-  const data = await fetch(`http://192.168.15.11/wordpress_BS/wp-json/wp/v2/comments`);
+  const data = await fetch(`http://192.168.8.191/wordpress/wp-json/wp/v2/comments`);
   jsonk = await data.json();
   console.log(jsonk)
 
   if(jsonk.length > 0) {
-    for (let j in jsonk) {
+    for (let i in jsonk) {
         const miejsce = document.getElementById("ogol")
         const divkom = document.createElement("div")
         divkom.classList.add("divik")
@@ -15,7 +15,7 @@ async function komentarze(){
         goragora.setAttribute("id", `goragora}`)
 
         const gora = document.createElement("div")
-        gora.setAttribute("id", `gora${j}`)
+        gora.setAttribute("id", `gora${i}`)
 
         const dol = document.createElement("div")
         dol.setAttribute("id", "dol")
@@ -29,16 +29,18 @@ async function komentarze(){
         const button = document.createElement("button")
         button.innerHTML="Delete"
         button.addEventListener('click', ()=>{
-          zrob(jsonk[j].id)
+          zrob(jsonk[i].id)
         })
 
         const buttonodp = document.createElement("button")
         buttonodp.innerHTML="Odpowiedz"
         buttonodp.addEventListener('click', async ()=>{
-          const kom = json.content.rendered
+          const kom = document.getElementById(`gora${i}`)
         
           
-          if(kom.toLowerCase().includes("kupa")){}else{
+          if(kom.toLowerCase().includes("kupa")){
+            //for(let)
+          }else{
             console.log("DOBRZE!")
           }
         })
@@ -54,8 +56,8 @@ async function komentarze(){
           text: "Special"
         });
 
-        const idkom = jsonk[j].post
-        const url = await fetch(`http://192.168.15.11/wordpress_BS/wp-json/wp/v2/posts/${idkom}`)
+        const idkom = jsonk[i].post
+        const url = await fetch(`http://192.168.8.191/wordpress/wp-json/wp/v2/posts/${idkom}`)
         const json = await url.json()
         //console.log(json)
 
@@ -63,7 +65,7 @@ async function komentarze(){
           goragora.innerHTML=json.title.rendered
         }
           
-        gora.innerHTML=jsonk[j].content.rendered
+        gora.innerHTML=jsonk[i].content.rendered
         dollewo.appendChild(button)
         dolprawo.appendChild(buttonodp)
         divkom.appendChild(goragora)
@@ -74,7 +76,7 @@ async function komentarze(){
         miejsce.appendChild(divkom)
 
 
-        if(jsonk[j].content.rendered.toLowerCase().includes("kupa")){
+        if(jsonk[i].content.rendered.toLowerCase().includes("kupa")){
           divkom.style.backgroundColor="red"
         }
     }
@@ -84,7 +86,7 @@ komentarze()
 
 function zrob(id){
  //tworzymy polecenie
- const url = new URL(`http://192.168.15.11/wordpress_BS/wp-json/wp/v2/comments/${id}`)
+ const url = new URL(`http://192.168.8.191/wordpress/wp-json/wp/v2/comments/${id}`)
  
    fetch(url,{
      method: 'DELETE',
