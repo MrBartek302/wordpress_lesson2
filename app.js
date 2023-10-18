@@ -1,7 +1,7 @@
 var jsonk = []
 
 async function komentarze(){
-  const data = await fetch(`http://192.168.8.191/wordpress/wp-json/wp/v2/comments`);
+  const data = await fetch(`http://192.168.15.11/wordpress_BS/wp-json/wp/v2/comments`);
   jsonk = await data.json();
   console.log(jsonk)
 
@@ -55,7 +55,7 @@ async function komentarze(){
         });
 
         const idkom = jsonk[j].post
-        const url = await fetch(`http://192.168.8.191/wordpress/wp-json/wp/v2/posts/${idkom}`)
+        const url = await fetch(`http://192.168.15.11/wordpress_BS/wp-json/wp/v2/posts/${idkom}`)
         const json = await url.json()
         //console.log(json)
 
@@ -84,7 +84,7 @@ komentarze()
 
 function zrob(id){
  //tworzymy polecenie
- const url = new URL(`http://192.168.8.191/wordpress/wp-json/wp/v2/comments/${id}`)
+ const url = new URL(`http://192.168.15.11/wordpress_BS/wp-json/wp/v2/comments/${id}`)
  
    fetch(url,{
      method: 'DELETE',
