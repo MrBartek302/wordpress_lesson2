@@ -1,7 +1,7 @@
 var jsonk = []
 
 async function komentarze(){
-  const data = await fetch(`http://192.168.8.191/wordpress/wp-json/wp/v2/comments`);
+  const data = await fetch(`http://192.168.15.11/wordpress_BS/wp-json/wp/v2/comments`);
   jsonk = await data.json();
   console.log(jsonk)
 
@@ -21,12 +21,24 @@ async function komentarze(){
         dol.setAttribute("id", "dol")
 
         const button = document.createElement("button")
+        button.innerHTML="Delete"
         button.addEventListener('click', ()=>{
           zrob(jsonk[j].id)
         })
 
+    
+        JsBarcode("#barcode1", "Hi!", {
+          textAlign: "left",
+          textPosition: "top",
+          font: "cursive",
+          fontOptions: "bold",
+          fontSize: 40,
+          textMargin: 15,
+          text: "Special"
+        });
+
         const idkom = jsonk[j].post
-        const url = await fetch(`http://192.168.8.191/wordpress/wp-json/wp/v2/posts/${idkom}`)
+        const url = await fetch(`http://192.168.15.11/wordpress_BS/wp-json/wp/v2/posts/${idkom}`)
         const json = await url.json()
 
         if(json.title){
@@ -51,7 +63,7 @@ komentarze()
 
 function zrob(id){
  //tworzymy polecenie
- const url = new URL(`http://192.168.8.191/wordpress/wp-json/wp/v2/comments/${id}`)
+ const url = new URL(`http://192.168.15.11/wordpress_BS/wp-json/wp/v2/comments/${id}`)
  
    fetch(url,{
      method: 'DELETE',
