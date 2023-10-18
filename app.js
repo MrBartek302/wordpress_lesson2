@@ -12,18 +12,34 @@ async function komentarze(){
         divkom.classList.add("divik")
 
         const goragora = document.createElement("div")
-        goragora.setAttribute("id", "goragora")
+        goragora.setAttribute("id", `goragora}`)
 
         const gora = document.createElement("div")
-        gora.setAttribute("id", "gora")
+        gora.setAttribute("id", `gora${j}`)
 
         const dol = document.createElement("div")
         dol.setAttribute("id", "dol")
+
+        const dolprawo = document.createElement("div")
+        dolprawo.setAttribute("id", "dolprawo")
+
+        const dollewo = document.createElement("div")
+        dollewo.setAttribute("id", "dollewo")
 
         const button = document.createElement("button")
         button.innerHTML="Delete"
         button.addEventListener('click', ()=>{
           zrob(jsonk[j].id)
+        })
+
+        const buttonodp = document.createElement("button")
+        buttonodp.innerHTML="Odpowiedz"
+        buttonodp.addEventListener('click', ()=>{
+          const kom = document.getElementById(`gora${j}`).innerHTML
+          
+          if(kom.toLowerCase().includes("kupa")){}else{
+            console.log("DOBRZE!")
+          }
         })
 
     
@@ -40,16 +56,20 @@ async function komentarze(){
         const idkom = jsonk[j].post
         const url = await fetch(`http://192.168.15.11/wordpress_BS/wp-json/wp/v2/posts/${idkom}`)
         const json = await url.json()
+        //console.log(json)
 
         if(json.title){
           goragora.innerHTML=json.title.rendered
         }
           
         gora.innerHTML=jsonk[j].content.rendered
-        dol.appendChild(button)
+        dollewo.appendChild(button)
+        dolprawo.appendChild(buttonodp)
         divkom.appendChild(goragora)
         divkom.appendChild(gora)
         divkom.appendChild(dol)
+        dol.appendChild(dollewo)
+        dol.appendChild(dolprawo)
         miejsce.appendChild(divkom)
 
 
