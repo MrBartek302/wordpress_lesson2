@@ -46,7 +46,7 @@ body{
     width: 100%;
 }
 
-#gora{
+.gora{
     display: flex;
     align-items: center;
     justify-content: center;

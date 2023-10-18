@@ -35,17 +35,36 @@ async function komentarze(){
         const buttonodp = document.createElement("button")
         buttonodp.innerHTML="Odpowiedz"
         buttonodp.addEventListener('click', async ()=>{
-          const kom = document.getElementById(`gora${i}`)
+          const kom = jsonk[i].content.rendered
         
-          
           if(kom.toLowerCase().includes("kupa")){
-            //for(let)
+            const idpostu = jsonk[i].post
+            const idkomentarza = jsonk[i].id
+
+            const url = new URL('http://192.168.8.191/wordpress/wp-json/wp/v2/comments')
+
+            const params={
+              post: idpostu,
+              content: "Automatycznie wygenerowana odpowiedź",
+              parent: idkomentarza
+            }
+
+            for(let j in params){
+              url.searchParams.append(j, params[j])
+            }
+
+            const data = await fetch(url, {
+              method: 'POST',
+              headers: {
+                authorization: `Basic ${btoa("mrbartek:B4rt3k20071024!@")}`
+              }
+            })
+  
           }else{
             console.log("DOBRZE!")
           }
         })
 
-    
         JsBarcode("#barcode1", "Hi!", {
           textAlign: "left",
           textPosition: "top",
