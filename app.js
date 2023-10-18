@@ -34,8 +34,9 @@ async function komentarze(){
 
         const buttonodp = document.createElement("button")
         buttonodp.innerHTML="Odpowiedz"
-        buttonodp.addEventListener('click', ()=>{
-          const kom = document.getElementById(`gora${j}`).innerHTML
+        buttonodp.addEventListener('click', async ()=>{
+          const kom = json.content.rendered
+        
           
           if(kom.toLowerCase().includes("kupa")){}else{
             console.log("DOBRZE!")
